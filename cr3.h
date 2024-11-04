@@ -1,3 +1,13 @@
+auto read_physical(PVOID target_address,
+	PVOID buffer,
+	SIZE_T size,
+	SIZE_T* bytes_read) -> NTSTATUS
+{
+	MM_COPY_ADDRESS to_read = { 0 };
+	to_read.PhysicalAddress.QuadPart = (LONGLONG)target_address;
+	return MmCopyMemory(buffer, to_read, size, MM_COPY_MEMORY_PHYSICAL, bytes_read);
+}
+
 struct cache {
 	uintptr_t Address;
 	MMPTE Value;
